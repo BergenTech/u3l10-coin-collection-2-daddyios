@@ -3,7 +3,8 @@ let coinX, coinY;
 let obstacleX, obstacleY;
 let score = 0;
 let gameOver = false;
-
+let speed = 1
+let hits = 0
 function setup() {
   createCanvas(400, 400);
   initializeGame();
@@ -54,23 +55,12 @@ function drawPlayer() {
 function drawCoin() {
   fill(255, 255, 0);  // Yellow coin
   circle(coinX, coinY, 10);
-  if (dist(coinX,coinY,playerX,playerY)<14){
-    playerX = width/2
-    playerY = height-20
-    obstacleY=0
-    obstacleX = random(20, width-20);
-    
-  }
+  
 }
 
 function drawObstacle() {
   fill(255, 0, 0);  // Red obstacle
   rect(obstacleX, obstacleY, 20, 20);
-  obstacleY+=5
-  if(obstacleY>height){
-    obstacleY=0
-    obstacleX = random(20, width-20);
-  }
 }
 
 // Basic left/right movement provided
@@ -98,21 +88,24 @@ function movePlayer() {
 }
 
 function moveObstacle() {
-  // TODO: Move obstacle from left to right
-  // HINT: Increase obstacleX by obstacleSpeed
-  
-  // TODO: Reset obstacle when it goes off screen
-  // HINT: Check if obstacleX > width
-  // Reset to left side and new random Y position
+  obstacleY+=speed
+  if(obstacleY>height){
+    obstacleY=0
+    obstacleX = random(20, width-20);
+  }
 }
 
 function checkCoinCollection() {
-  // TODO: Check if player touches coin
-  // HINT: Use dist(playerX, playerY, coinX, coinY)
-  // If distance < 15:
-  //   - Increase score
-  //   - Create new coin
-  //   - Increase obstacle speed slightly
+  if (dist(coinX,coinY,playerX,playerY)<12){
+    playerX = width/2
+    playerY = height-20
+    obstacleY=0
+    obstacleX = random(20, width-20);
+    speed++
+    score++
+    coinX = random(0,400)
+    coinY = random(0,400)
+  }
 }
 
 function checkCollisions() {
@@ -122,12 +115,23 @@ function checkCollisions() {
   //   - Increase hits
   //   - Check for game over (hits >= 3)
   //   - Reset positions
+  if(dist(playerX,playerY,obstacleX,obstacleY)<30){
+    playerX = width/2
+    playerY = height-20
+    obstacleY=0
+    obstacleX = random(20, width-20);
+    coinX = random(0,400)
+    coinY = random(0,400)
+    hits++
+  }
 }
 
 function displayStats() {
   fill(0);
   textSize(16);
   text("Score: " + score, 10, 20);
+  text("Hits: " + hits, 100, 20);
+  text("Speed: " + speed, 200, 20);
   // TODO: Add display for hits and speed
 }
 
