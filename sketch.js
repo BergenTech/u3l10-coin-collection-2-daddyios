@@ -45,6 +45,9 @@ function draw() {
     // Display game stats
     displayStats();
   }
+  if(hits==3){
+    gameOver=true
+  }
 }
 
 function drawPlayer() {
@@ -97,14 +100,8 @@ function moveObstacle() {
 
 function checkCoinCollection() {
   if (dist(coinX,coinY,playerX,playerY)<12){
-    playerX = width/2
-    playerY = height-20
-    obstacleY=0
-    obstacleX = random(20, width-20);
-    speed++
+    resetGame()
     score++
-    coinX = random(0,400)
-    coinY = random(0,400)
   }
 }
 
@@ -116,12 +113,7 @@ function checkCollisions() {
   //   - Check for game over (hits >= 3)
   //   - Reset positions
   if(dist(playerX,playerY,obstacleX,obstacleY)<30){
-    playerX = width/2
-    playerY = height-20
-    obstacleY=0
-    obstacleX = random(20, width-20);
-    coinX = random(0,400)
-    coinY = random(0,400)
+    resetGame()
     hits++
   }
 }
@@ -129,9 +121,9 @@ function checkCollisions() {
 function displayStats() {
   fill(0);
   textSize(16);
-  text("Score: " + score, 10, 20);
-  text("Hits: " + hits, 100, 20);
-  text("Speed: " + speed, 200, 20);
+  text("Score: " + score, 50, 20);
+  text("Hits: " + hits, 200, 20);
+  text("Speed: " + speed, 300, 20);
   // TODO: Add display for hits and speed
 }
 
@@ -142,6 +134,13 @@ function displayGameOver() {
   //   - "Game Over" message
   //   - Final score
   //   - "Press R to Restart"
+  textSize(40)
+  textAlign(CENTER)
+  text('GAME OVER',width/2,200)
+  textSize(20)
+  text(`Score: ${score}`,width/2,250)
+  text(`Press R to restart`,width/2,300)
+
 }
 
 function newCoin() {
@@ -155,12 +154,30 @@ function resetGame() {
   // HINT: Reset score, hits, speed
   // Set gameOver to false
   // Call initializeGame()
+  playerX = width/2
+    playerY = height-20
+    obstacleY=0
+    obstacleX = random(20, width-20);
+    speed++
+    coinX = random(0,400)
+    coinY = random(0,400)
 }
-
 function keyPressed() {
   // TODO: Check for 'R' key to restart game
   // HINT: Use key === 'r' || key === 'R'
   // Only works when game is over
+  if(gameOver){
+    
+    if(key=='r'){
+      resetGame()
+      draw()
+      gameOver=false
+      console.log(gameOver)
+      hits = 0
+      score=0
+      speed=1
+  }
+}
 }
 
 // Helper function you might need
