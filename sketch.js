@@ -54,6 +54,13 @@ function drawPlayer() {
 function drawCoin() {
   fill(255, 255, 0);  // Yellow coin
   circle(coinX, coinY, 10);
+  if (dist(coinX,coinY,playerX,playerY)<14){
+    playerX = width/2
+    playerY = height-20
+    obstacleY=0
+    obstacleX = random(20, width-20);
+    
+  }
 }
 
 function drawObstacle() {
@@ -73,6 +80,12 @@ function movePlayer() {
   }
   if (keyIsDown(RIGHT_ARROW)) {
     playerX += 5;
+  }
+  if (keyIsDown(UP_ARROW)) {
+    playerY -= 5;
+  }
+  if (keyIsDown(DOWN_ARROW)) {
+    playerY += 5;
   }
   
   // TODO: Add up/down movement
