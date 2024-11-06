@@ -126,7 +126,6 @@ function displayStats() {
   text("Speed: " + speed, 300, 20);
   // TODO: Add display for hits and speed
 }
-
 function displayGameOver() {
   // TODO: Show game over screen
   // HINT: Use textAlign(CENTER, CENTER)
@@ -142,13 +141,11 @@ function displayGameOver() {
   text(`Press R to restart`,width/2,300)
 
 }
-
 function newCoin() {
   // Generate random position for coin
   coinX = random(20, width-20);
   coinY = random(20, height-20);
 }
-
 function resetGame() {
   // TODO: Reset all game variables
   // HINT: Reset score, hits, speed
